@@ -5,3 +5,11 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+CATEGORIES.each do |category|
+  Category.find_or_create_by(name: category)
+end
+
+PRODUCTS.each do |product|
+  Product.find_or_create_by(name: product[:name], ndc: product[:ndc], quantity: product[:qty], price: product[:price], instruction: product[:instructions], category: Category.find_or_create_by(name: product[:category]))
+end
