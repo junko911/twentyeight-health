@@ -13,3 +13,7 @@ end
 PRODUCTS.each do |product|
   Product.find_or_create_by(name: product[:name], ndc: product[:ndc], quantity: product[:qty], price: product[:price], instruction: product[:instructions], category: Category.find_or_create_by(name: product[:category]))
 end
+
+STATES.each do |state|
+  State.find_or_create_by(name: state[0], abbreviation: state[1], service_offered: state[2], minimum_age: state[3])
+end
