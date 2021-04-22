@@ -6,14 +6,28 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-CATEGORIES.each do |category|
-  Category.find_or_create_by(name: category)
+CATEGORIES.each do |name|
+  Category.find_or_create_by(name: name)
 end
 
 PRODUCTS.each do |product|
-  Product.find_or_create_by(name: product[:name], ndc: product[:ndc], quantity: product[:qty], price: product[:price], instruction: product[:instructions], category: Category.find_or_create_by(name: product[:category]))
+  Product.find_or_create_by(
+    name: product[:name], 
+    ndc: product[:ndc], 
+    qty: product[:qty], 
+    price: product[:price], 
+    instructions: product[:instructions], 
+    category: Category.find_by!(name: product[:category])
+  )
 end
 
 STATES.each do |state|
-  State.find_or_create_by(name: state[0], abbreviation: state[1], service_offered: state[2], minimum_age: state[3])
+  name, abbreviation, service_offered, minimum_age = state
+
+  State.find_or_create_by(
+    name: name, 
+    abbreviation: abbreviation, 
+    service_offered: service_offered, 
+    minimum_age: minimum_age
+  )
 end
