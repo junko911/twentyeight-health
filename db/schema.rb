@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 2021_04_21_193315) do
   end
 
   create_table "patients", force: :cascade do |t|
-    t.string "fullname"
+    t.string "name"
     t.string "email"
     t.date "date_of_birth"
     t.datetime "created_at", precision: 6, null: false
