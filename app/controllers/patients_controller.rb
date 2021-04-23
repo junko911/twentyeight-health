@@ -6,11 +6,16 @@ class PatientsController < ApplicationController
 
   def create
     @patient = Patient.create(patient_params)
-    redirect_to @patient
+
+    if @patient.save
+      redirect_to @patient
+    else
+      render :new
+    end
   end
 
   def show
-    @patients = Patient.all
+    @patient = Patient.find(params[:id])
   end
 
   private
