@@ -28,3 +28,50 @@
 
   <%= form.submit 'Sign Up', class: "btn btn-primary" %>
 <% end %>
+
+<script>
+  const statesData = <%= raw(State.all.to_json(only: [:id, :service_offered, :minimum_age])) %>
+
+  function calculateAge(dob) {  
+    const diff_ms = Date.now() - new Date(dob).getTime()
+    const age_dt = new Date(diff_ms) 
+  
+    return Math.abs(age_dt.getUTCFullYear() - 1970)
+  }
+
+  function validate(e) {
+    const state = document.querySelector("#patient_state_id").value
+    const date_of_birth = document.querySelector("#patient_date_of_birth").value
+    let errors = []
+
+    if(state.length) {
+      // State validation
+      const foundState = statesData.find(ele => ele.id.toString() === state)
+
+      if(foundState.service_offered) {
+        // Age validation
+          if(date_of_birth.length) {
+            if(calculateAge(date_of_birth) < foundState.minimum_age) {
+              errors.push(`You are required to be ${foundState.minimum_age} years old or more.`)
+            }
+          } else {
+            errors.push("Please select date of birth")
+          }
+        } else {
+        errors.push("Service not offered in this state")
+      }
+    } else {
+      errors.push("Please select state")
+    }
+
+    if(errors.length){
+      e.preventDefault()
+      alert(errors.join("\n"))
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelector(".form-signin")
+      .addEventListener("submit", validate)
+  })
+</script>
