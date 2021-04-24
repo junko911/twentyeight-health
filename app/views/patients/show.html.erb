@@ -1,3 +1,9 @@
 <h2>Patient Details</h2>
 <p>Name: <%= @patient.name %></p>
 <p>Doctor: <%= @patient.doctor %></p>
+<p>Products: </p>
+<ul>
+  <% @patient.products.each do |product| %>
+    <li><%= product.name %></li>
+  <% end %>
+</ul>

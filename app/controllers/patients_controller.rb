@@ -7,6 +7,8 @@ class PatientsController < ApplicationController
   def create
     @patient = Patient.create(patient_params)
 
+    @patient.product_ids = params[:product_ids].select(&:present?)
+    
     if @patient.save
       DoctorAssigner.call(@patient)
 
