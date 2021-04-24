@@ -2,8 +2,19 @@
 <p>Name: <%= @patient.name %></p>
 <p>Doctor: <%= @patient.doctor %></p>
 <p>Products: </p>
-<ul>
+<table class="table">
+  <tr>
+    <th>Name</th>
+    <th>NDC</th>
+    <th>Price</th>
+    <th>Instructions</th>
+  </tr>
   <% @patient.products.each do |product| %>
-    <li><%= product.name %></li>
+    <tr>
+      <td><%= product.name %></td>
+      <td><%= product.ndc %></td>
+      <td>$<%= product.price %></td>
+      <td><%= product.instructions %></td>
+    </tr>
   <% end %>
-</ul>
+</table>
