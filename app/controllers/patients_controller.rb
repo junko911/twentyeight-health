@@ -5,7 +5,7 @@ class PatientsController < ApplicationController
   end
 
   def create
-    @patient = Patient.create(patient_params)
+    @patient = Patient.new(patient_params)
 
     @patient.product_ids = params[:product_ids].select(&:present?)
     
